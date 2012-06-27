@@ -85,8 +85,8 @@ class TextLoft {
 			<?php if (!$edit): ?> <a href="#" id="wiki-edit">Edit</a> | <?php endif ?>New page: <input type="text" name="wiki-page"/> <input id="wiki-new-page" type="submit" value="Go">
 		</footer>
 		</div>
-		<script src="jquery.js"></script>
-		<script src="textloft.js"></script>
+		<script src="<?= TextLoft::$home ?>js/jquery.js"></script>
+		<script src="<?= TextLoft::$home ?>js/textloft.js"></script>
 		</body>
 		</html>
 		<?php
