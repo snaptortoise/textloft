@@ -4,7 +4,9 @@
 class TextLoft {
 	
 	public static $path = "pages";
+	public static $files;
 	public static $home;
+
 	function go() {
 		
 		TextLoft::$home = substr($_SERVER["REQUEST_URI"], 0, strrpos($_SERVER["REQUEST_URI"], "/")+1);
@@ -18,6 +20,18 @@ class TextLoft {
 		$filename = TextLoft::$path . "/" . $page . ".html";
 		$edit = stristr($_SERVER["REQUEST_URI"], "?edit");
 		
+		$files = scandir(TextLoft::$path);		
+
+		foreach($files as $key=>$file) { 									
+			if ($file == "." || $file == "..") {				
+				unset ($files[$key]);
+			}else{
+				$files[$key] = str_replace(".html", "", $file);
+			}
+		}
+
+		TextLoft::$files = $files;		
+
 		if (!file_exists($filename) || $edit) {			
 			// File empty; show editor
 
@@ -73,6 +87,15 @@ class TextLoft {
 			<div class="wrap">
 				<header>
 					<a class="home" href="<?= TextLoft::$home ?>">&laquo; Home</a>
+
+					<?php if(count(TextLoft::$files)):  ?>					
+					<select id="wiki-jump">
+						<option value="#">Jump to page</option>
+					<?php foreach(TextLoft::$files as $file): ?>
+						<option value="<?= $file ?>"><?= $file ?></option>
+					<?php endforeach; ?>					
+					</select>
+					<?php endif; ?>
 				</header>
 				<section role="main">			
 		<?php
@@ -82,7 +105,7 @@ class TextLoft {
 		?>
 		</section>
 		<footer>
-			<?php if (!$edit): ?> <a href="#" id="wiki-edit">Edit</a> | <?php endif ?>New page: <input type="text" name="wiki-page"/> <input id="wiki-new-page" type="submit" value="Go">
+			<?php if (!$edit): ?> <a href="#" id="wiki-edit">Edit</a> | <form id="wiki-new-page"><?php endif ?>New page: <input type="text" name="wiki-page"/> <input type="submit" value="Go"></form>
 		</footer>
 		</div>
 		<script src="<?= TextLoft::$home ?>js/jquery.js"></script>
@@ -94,8 +117,4 @@ class TextLoft {
 
 }
 
-
-
 TextLoft::go();
-
-

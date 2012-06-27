@@ -33,8 +33,14 @@ footer,header {
 
 footer {
 	text-align:right;
+	form { display:inline; }
 }
 
+header {
+	select#wiki-jump {
+		float:right;		
+	}
+}
 
 .editor {
 	input[type=text], textarea {
@@ -67,6 +73,7 @@ footer {
 section[role=main] {
 	padding:5px 15px;
 }
+
 
 @media all and (min-width:320px) {
 	.wrap { width:92%;}
