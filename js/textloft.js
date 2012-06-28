@@ -1,5 +1,6 @@
 $(function(){
 
+
 	// Create new page
 	$("#wiki-new-page").submit(function(){
 		var page = $("input[name=wiki-page]").val();
@@ -8,10 +9,24 @@ $(function(){
 		return false;
 	});
 
+	// Edit current page
+	$("#wiki-edit").click(function(){
+		location.search = "?edit";
+		return false;
+	});
+
+	// Delete current page
+	$("#wiki-delete").click(function(){
+		// alert("!");
+		location.search = "?delete";
+		return false;
+	});
+
 	// Jump to another page
 	$("#wiki-jump").change(function(){
 		var page =$(this).val();
 		location = page;		
+		return false;
 	});
 
 });
