@@ -16,15 +16,15 @@ $(function(){
 	});
 
 	// Delete current page
-	$("a#wiki-delete").click(function(){
+	$("#wiki-delete").click(function(){
 		// alert("!");
 		window.location.search = "?delete";
 		return false;
 	});
 
 	// Jump to another page
-	$("a#wiki-jump").change(function(){
-		var page =$(this).val();
+	$("#wiki-jump").change(function(){
+		var page = $(this).val();
 		window.location = page;		
 		return false;
 	});
