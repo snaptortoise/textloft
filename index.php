@@ -117,7 +117,7 @@ class TextLoft {
 		?>
 		</section>
 		<footer>
-			<?php if (!$edit): ?> <a href="#" id="wiki-edit">Edit</a> | <a href="#" id="wiki-delete">Delete</a> | <form id="wiki-new-page"><?php endif ?>New page: <input type="text" size=10 name="wiki-page"/> <input type="submit" value="Go"></form>
+			<?php if (!$edit): ?> <a href="?edit" id="wiki-edit">Edit</a> | <a href="?delete" id="wiki-delete">Delete</a> | <form id="wiki-new-page"><?php endif ?>New page: <input type="text" size=10 name="wiki-page"/> <input type="submit" value="Go"></form>
 		</footer>
 		</div>
 		<script src="<?= TextLoft::$home ?>js/jquery.js"></script>		
