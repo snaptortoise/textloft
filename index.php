@@ -37,12 +37,12 @@ class TextLoft {
 
 			if ($_POST) { 
 				$content = $_POST["wiki-content"];
-				TextLoft::create($filename, $title, $content);
+				TextLoft::create($filename, $content);
 				header("Location:$page");
 			}else{
 				$current_content = $edit ? file_get_contents($filename) : "#$title\n";
 				TextLoft::header("Editing $page");
-				TextLoft::editor($title, $current_content);	
+				TextLoft::editor($current_content);	
 				TextLoft::footer($edit);	
 			}			
 			
@@ -58,17 +58,16 @@ class TextLoft {
 	}
 
 
-	function editor($title, $current_content) {
+	function editor($current_content) {
 		?>
-		<form class="editor" action="" method="post">
-			<input type="text" name="title" id="title" value="<?= $title ?>"/> <br/>
+		<form class="editor" action="" method="post">			
 			<textarea name="wiki-content" id="wiki-content" cols="30" rows="10"><?= $current_content ?></textarea> <br/>
 			<input type="submit" value="Save">
 		</form>
 		<?php
 	}
 
-	function create ($filename, $title, $content) {		
+	function create ($filename, $content) {		
 		
 		$content = $content;
 		file_put_contents($filename, $content);
@@ -109,6 +108,7 @@ class TextLoft {
 		</footer>
 		</div>
 		<script src="<?= TextLoft::$home ?>js/jquery.js"></script>
+		<script src="<?= TextLoft::$home ?>js/jquery.pjax.js"></script>
 		<script src="<?= TextLoft::$home ?>js/textloft.js"></script>
 		</body>
 		</html>
