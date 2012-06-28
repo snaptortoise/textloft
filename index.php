@@ -70,6 +70,7 @@ class TextLoft {
 		<form class="editor" action="" method="post">			
 			<textarea name="wiki-content" id="wiki-content" cols="30" rows="10"><?= $current_content ?></textarea> <br/>
 			<input type="submit" value="Save">
+			<br/> <a href="#" id="wiki-cancel">Cancel</a>
 		</form>
 		<?php
 	}

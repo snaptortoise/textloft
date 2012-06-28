@@ -15,6 +15,12 @@ $(function(){
 		return false;
 	});
 
+	// Cancel editing
+	$("#wiki-cancel").click(function(){
+		window.location.search='';
+		return false;
+	});
+
 	// Delete current page
 	$("#wiki-delete").click(function(){
 		// alert("!");
