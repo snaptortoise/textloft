@@ -86,6 +86,7 @@ class TextLoft {
 			<meta name="viewport" content = "width = device-width, initial-scale = 1, user-scalable = no" /> 
 			<link rel="shortcut icon" href="<?= TextLoft::$home ?>favicon.png">
 			<link rel="apple-touch-icon-precomposed" href="<?= TextLoft::$home ?>apple-touch-icon-precomposed.png">
+			<link rel="apple-touch-startup-image" href="apple-touch-startup-image.png">
 		</head>
 		<body>
 			<div class="wrap">
