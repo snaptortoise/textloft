@@ -81,6 +81,11 @@ class TextLoft {
 			<meta charset="UTF-8">
 			<title><?= $title ?></title>
 			<link rel="stylesheet" href="<?= TextLoft::$home ?>css/style.css">
+			<meta name="apple-mobile-web-app-capable" content="yes" />
+			<meta name="apple-mobile-web-app-status-bar-style" content="black" />  
+			<meta name="viewport" content = "width = device-width, initial-scale = 1, user-scalable = no" /> 
+			<link rel="shortcut icon" href="<?= TextLoft::$home ?>favicon.png">
+			<link rel="apple-touch-icon-precomposed" href="<?= TextLoft::$home ?>apple-touch-icon-precomposed.png">
 		</head>
 		<body>
 			<div class="wrap">
@@ -104,11 +109,10 @@ class TextLoft {
 		?>
 		</section>
 		<footer>
-			<?php if (!$edit): ?> <a href="#" id="wiki-edit">Edit</a> | <form id="wiki-new-page"><?php endif ?>New page: <input type="text" name="wiki-page"/> <input type="submit" value="Go"></form>
+			<?php if (!$edit): ?> <a href="#" id="wiki-edit">Edit</a> | <form id="wiki-new-page"><?php endif ?>New page: <input type="text" size=10 name="wiki-page"/> <input type="submit" value="Go"></form>
 		</footer>
 		</div>
-		<script src="<?= TextLoft::$home ?>js/jquery.js"></script>
-		<script src="<?= TextLoft::$home ?>js/jquery.pjax.js"></script>
+		<script src="<?= TextLoft::$home ?>js/jquery.js"></script>		
 		<script src="<?= TextLoft::$home ?>js/textloft.js"></script>
 		</body>
 		</html>

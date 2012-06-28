@@ -34,6 +34,20 @@ footer,header {
 footer {
 	text-align:right;
 	form { display:inline; }
+
+	input[type=submit] {	
+		background:@link;
+		.gradient(lighten(@link,10%),@link);
+		color:#fff;
+		border:0;
+		padding:3px 8px;
+		margin:10px 0;		
+		// font-size:15px;		
+		text-shadow:-1px 1px 0 rgba(0,0,0,.2);
+		.border-radius(3px);
+		.box-shadow(inset 0 0 5px rgba(255,255,255,.4));
+
+	}
 }
 
 header {
@@ -77,10 +91,23 @@ section[role=main] {
 
 @media all and (min-width:320px) {
 	.wrap { width:92%;}
+	.editor {
+		text-align:center;
+		input[type=submit] {
+			width:100%;			
+		}
+	}
 }
 
 @media all and (min-width:768px) {
 	.wrap { width:90%;}	
+		.editor {		
+		text-align:left;	
+		input[type=submit] {
+			width:auto;			
+		}
+	}
+
 }
 
 
