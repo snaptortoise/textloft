@@ -19,7 +19,14 @@ class TextLoft {
 
 		$filename = TextLoft::$path . "/" . $page . ".html";
 		$edit = stristr($_SERVER["REQUEST_URI"], "?edit");
+		$delete = stristr($_SERVER["REQUEST_URI"], "?delete");
 		
+		if ($delete && file_exists($filename)) {
+			unlink($filename);
+			header("Location:" . TextLoft::$home);
+			exit();
+		}
+
 		$files = scandir(TextLoft::$path);		
 
 		foreach($files as $key=>$file) { 									
@@ -110,7 +117,7 @@ class TextLoft {
 		?>
 		</section>
 		<footer>
-			<?php if (!$edit): ?> <a href="#" id="wiki-edit">Edit</a> | <form id="wiki-new-page"><?php endif ?>New page: <input type="text" size=10 name="wiki-page"/> <input type="submit" value="Go"></form>
+			<?php if (!$edit): ?> <a href="#" id="wiki-edit">Edit</a> | <a href="#" id="wiki-delete">Delete</a> | <form id="wiki-new-page"><?php endif ?>New page: <input type="text" size=10 name="wiki-page"/> <input type="submit" value="Go"></form>
 		</footer>
 		</div>
 		<script src="<?= TextLoft::$home ?>js/jquery.js"></script>		

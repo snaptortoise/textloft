@@ -14,6 +14,12 @@ $(function(){
 		location.search = "?edit";
 	});
 
+	// Delete current page
+	$("#wiki-delete").click(function(){
+		// alert("!");
+		location.search = "?delete";
+	});
+
 	// Jump to another page
 	$("#wiki-jump").change(function(){
 		var page =$(this).val();
