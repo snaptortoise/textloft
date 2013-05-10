@@ -1,8 +1,8 @@
 <?php
 
 
-class TextLoft {
-	
+class TextLoft {	
+	public static $title = "TextLoft"; 
 	public static $path = "pages";
 	public static $files;
 	public static $home;
@@ -15,7 +15,7 @@ class TextLoft {
 		$page = urldecode($title);
 
 		if (!$page) $page = "index";
-		if (!$title) $title = "Home";
+		if (!$title) $title = TextLoft::$title;
 
 		$filename = TextLoft::$path . "/" . $page . ".html";
 		$edit = stristr($_SERVER["REQUEST_URI"], "?edit");
@@ -47,7 +47,7 @@ class TextLoft {
 				TextLoft::create($filename, $content);
 				header("Location:$page");
 			}else{
-				$current_content = $edit ? file_get_contents($filename) : "#$title\n";
+				$current_content = $edit ? file_get_contents($filename) : "# ". ucwords($title) . "\n";
 				TextLoft::header("Editing $page");
 				TextLoft::editor($current_content);	
 				TextLoft::footer($edit);	
@@ -99,11 +99,11 @@ class TextLoft {
 		<body>
 			<div class="wrap">
 				<header>
-					<a class="home" href="<?= TextLoft::$home ?>">&laquo; Home</a>
+					<a class="home" href="<?= TextLoft::$home ?>"><?= TextLoft::$title ?></a>
 
 					<?php if(count(TextLoft::$files)):  ?>					
 					<select id="wiki-jump">
-						<option value="#">Jump to page</option>
+						<option value="#" >&rarr; Jump</option>
 					<?php foreach(TextLoft::$files as $file): ?>
 						<option value="<?= $file ?>"><?= $file ?></option>
 					<?php endforeach; ?>					
@@ -118,7 +118,10 @@ class TextLoft {
 		?>
 		</section>
 		<footer>
-			<?php if (!$edit): ?> <a href="#" id="wiki-edit">Edit</a> | <a href="#" id="wiki-delete">Delete</a> | <form id="wiki-new-page"><?php endif ?>New page: <input type="text" size=10 name="wiki-page"/> <input type="submit" value="Go"></form>
+			<div class="group">
+			<?php if (!$edit): ?> <a href="#" id="wiki-edit">Edit</a> | <a href="#" id="wiki-delete">Delete</a> 
+			</div>
+			<form class="wiki-new-page"><?php endif ?><input type="text" size=10 name="wiki-page" placeholder="Enter New Page"/> <input type="submit" value="Add"></form>
 		</footer>
 		</div>
 		<script src="<?= TextLoft::$home ?>js/jquery.js"></script>		

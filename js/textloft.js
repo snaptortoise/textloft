@@ -1,11 +1,10 @@
 $(function(){
 
-
 	// Create new page
-	$("#wiki-new-page").submit(function(){
+	$(".wiki-new-page").submit(function(){
 		var page = $("input[name=wiki-page]").val();
 		var path =location.pathname.substr(0,location.pathname.lastIndexOf("/")+1);
-		window.location = encodeURI(page);
+		window.location = path+ encodeURI(page);
 		return false;
 	});
 
