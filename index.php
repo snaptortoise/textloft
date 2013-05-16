@@ -62,7 +62,7 @@ class TextLoft {
 				header("Location:$page");
 			}else{
 				$current_content = $edit ? file_get_contents($filename) : "# ". ucwords($title) . "\n";
-				TextLoft::header("Creating $page", $edit);
+				TextLoft::header("$page", $edit);
 				TextLoft::editor($current_content);	
 				TextLoft::footer($edit);	
 			}			
@@ -117,7 +117,7 @@ class TextLoft {
 				<header>
 					<a class="home" href="<?= TextLoft::$home ?>"><?= TextLoft::$title ?></a>
 						&raquo; 
-					<?php if ($title != "index"): ?>
+					<?php if ($title != "index" && !$edit): ?>
 						<form action="?rename" id="rename-page" method="post">
 						<input type="text" value="<?= $title ?>" name="rename-page-title" data-old="<?= $title ?>" id="rename-page-title" />
 						</form>
@@ -145,7 +145,8 @@ class TextLoft {
 			<div class="group">
 			<?php if (!$edit && TextLoft::$writeable): ?> <a href="#" id="wiki-edit">Edit</a> | <a href="#" id="wiki-delete">Delete</a> 
 			</div>
-			<form class="wiki-new-page"><?php endif ?><input type="text" size=10 name="wiki-page" placeholder="Enter New Page"/> <input type="submit" value="Add"></form>
+			<?php endif ?>
+			<form class="wiki-new-page"><input type="text" size=10 name="wiki-page" placeholder="Enter New Page"/> <input type="submit" value="Add"></form>
 		</footer>
 		</div>
 		<script src="<?= TextLoft::$home ?>js/jquery.js"></script>		
