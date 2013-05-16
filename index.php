@@ -7,6 +7,7 @@ class TextLoft {
 	public static $files;
 	public static $home;
 	public static $writeable = true;
+	public static $extension = ".md";
 
 	function go() {
 		
@@ -18,7 +19,7 @@ class TextLoft {
 		if (!$page) $page = "index";
 		if (!$title) $title = TextLoft::$title;
 
-		$filename = TextLoft::$path . "/" . $page . ".html";
+		$filename = TextLoft::$path . "/" . $page . TextLoft::$extension;
 		$edit = stristr($_SERVER["REQUEST_URI"], "?edit");
 		$delete = stristr($_SERVER["REQUEST_URI"], "?delete");
 		$rename = stristr($_SERVER["REQUEST_URI"], "?rename");
@@ -26,7 +27,7 @@ class TextLoft {
 		if (TextLoft::$writeable === true):
 			if ($rename) {
 				$new_page = $_POST["rename-page-title"];			
-				file_put_contents(TextLoft::$path . "/" . $new_page . ".html", file_get_contents($filename));
+				file_put_contents(TextLoft::$path . "/" . $new_page . TextLoft::$extension, file_get_contents($filename));
 				unlink($filename);
 				header("Location:$new_page");
 				exit();
@@ -47,7 +48,7 @@ class TextLoft {
 			if ($file == "." || $file == "..") {				
 				unset ($files[$key]);
 			}else{
-				$files[$key] = str_replace(".html", "", $file);
+				$files[$key] = str_replace(TextLoft::$extension, "", $file);
 			}
 		}
 
