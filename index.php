@@ -53,7 +53,7 @@ class TextLoft {
 
 		TextLoft::$files = $files;		
 
-		if (!file_exists($filename) || $edit && TextLoft::$writeable) {			
+		if ((!file_exists($filename) || $edit) && TextLoft::$writeable) {			
 			// File empty; show editor
 
 			if ($_POST) { 
@@ -68,12 +68,15 @@ class TextLoft {
 			}			
 			
 
-		}else{
+		}elseif(file_exists($filename)){
 			require("markdown_extended.php");
 			$contents = file_get_contents($filename);
 			TextLoft::header($page);
 			echo MarkDownExtended($contents);			
 			TextLoft::footer($edit);
+		}else{
+			header(' ', true, 404);
+			exit();
 		}
 	
 	}
