@@ -16,6 +16,9 @@ class TextLoft {
 		$title = $_GET["page"];
 		$page = urldecode($title);
 
+		$replace = array("/[.|..]/");
+		$page = preg_replace("/\.\.|\~|\/|\'|\`/", "", $page);
+
 		if (!$page) $page = "index";
 		if (!$title) $title = TextLoft::$title;
 
