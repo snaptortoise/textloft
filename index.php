@@ -6,7 +6,7 @@ class TextLoft {
 	public static $path = "pages";
 	public static $files;
 	public static $home;
-	public static $writeable = true;
+	public static $writeable = false;
 
 	function go() {
 		
@@ -40,6 +40,7 @@ class TextLoft {
 			}
 		endif;
 
+		if (!file_exists(TextLoft::$path)) mkdir(TextLoft::$path);
 		$files = scandir(TextLoft::$path);		
 
 		foreach($files as $key=>$file) { 									
@@ -61,7 +62,7 @@ class TextLoft {
 				header("Location:$page");
 			}else{
 				$current_content = $edit ? file_get_contents($filename) : "# ". ucwords($title) . "\n";
-				TextLoft::header("$page", $edit);
+				TextLoft::header("Creating $page", $edit);
 				TextLoft::editor($current_content);	
 				TextLoft::footer($edit);	
 			}			
@@ -70,7 +71,7 @@ class TextLoft {
 		}else{
 			require("markdown_extended.php");
 			$contents = file_get_contents($filename);
-			TextLoft::header($page, $edit);
+			TextLoft::header($page);
 			echo MarkDownExtended($contents);			
 			TextLoft::footer($edit);
 		}
@@ -93,7 +94,7 @@ class TextLoft {
 		file_put_contents($filename, $content);
 	}
 	
-	function header($title, $edit) {
+	function header($title) {
 		?>
 		<!DOCTYPE HTML>
 		<html lang="en-US">
@@ -115,16 +116,7 @@ class TextLoft {
 						&raquo; 
 					<?php if ($title != "index"): ?>
 						<form action="?rename" id="rename-page" method="post">
-						<?php if (TextLoft::$writeable): ?>
-							<?php if ($edit): ?>
-								<em>(editing)</em>
-							<?php endif;?>
-							
 						<input type="text" value="<?= $title ?>" name="rename-page-title" data-old="<?= $title ?>" id="rename-page-title" />
-						<?php else: ?>
-							<?= $title ?>
-						<?php endif;?>
-						
 						</form>
 					<?php else:?>
 						<?= $title ?>
@@ -148,14 +140,9 @@ class TextLoft {
 		</section>
 		<footer>
 			<div class="group">
-			<?php if (TextLoft::$writeable): ?>
-			<?php if (!$edit): ?>
-				<a href="#" id="wiki-edit">Edit</a> | <a href="#" id="wiki-delete">Delete</a> 
-			<?php endif ?>
+			<?php if (!$edit && TextLoft::$writeable): ?> <a href="#" id="wiki-edit">Edit</a> | <a href="#" id="wiki-delete">Delete</a> 
 			</div>
-			<form class="wiki-new-page">			
-			<input type="text" size=10 name="wiki-page" placeholder="Enter New Page"/> <input type="submit" value="Add"></form>
-			<?php endif;?>
+			<form class="wiki-new-page"><?php endif ?><input type="text" size=10 name="wiki-page" placeholder="Enter New Page"/> <input type="submit" value="Add"></form>
 		</footer>
 		</div>
 		<script src="<?= TextLoft::$home ?>js/jquery.js"></script>		
