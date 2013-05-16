@@ -4,7 +4,7 @@ $(function(){
 	$(".wiki-new-page").submit(function(){
 		var page = $("input[name=wiki-page]").val();
 		var path =location.pathname.substr(0,location.pathname.lastIndexOf("/")+1);
-		window.location = path+ encodeURI(page);
+		window.location = path + encodeURI(page);
 		return false;
 	});
 
@@ -26,6 +26,19 @@ $(function(){
 		window.location.search = "?delete";
 		return false;
 	});
+	
+	// Rename current page
+	$("#rename-page").submit(function(e){
+		$rename = $("#rename-page-title");
+		var new_name = encodeURI($rename.val());
+		var old_name = encodeURI($rename.data("old"));
+
+		// e.preventDefault();
+		// window.location.search = "?rename&new=" + new_name + "&old=" + old_name;
+		// return false;			
+
+	});
+	
 
 	// Jump to another page
 	$("#wiki-jump").change(function(){

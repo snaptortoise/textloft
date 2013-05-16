@@ -539,6 +539,28 @@ header select#wiki-jump {
 header select#wiki-jump:hover {
   color: #008cc3;
 }
+header #rename-page {
+  display: inline-block;
+}
+header #rename-page-title {
+  border: none;
+  font-weight: bold;
+  -webkit-transition: 200ms;
+  -moz-transition: 200ms;
+  -o-transition: 200ms;
+  -ms-transition: 200ms;
+  transition: 200ms;
+  outline: none;
+}
+header #rename-page-title:hover {
+  background: #ffe;
+}
+header #rename-page-title:focus {
+  border: 1px #ccc solid;
+  padding: 3px;
+  color: #000;
+  background: #ffa;
+}
 .editor input[type=text],
 .editor textarea {
   border: 1px #ddd solid;

@@ -6,6 +6,7 @@ class TextLoft {
 	public static $path = "pages";
 	public static $files;
 	public static $home;
+	public static $writeable = true;
 
 	function go() {
 		
@@ -20,12 +21,24 @@ class TextLoft {
 		$filename = TextLoft::$path . "/" . $page . ".html";
 		$edit = stristr($_SERVER["REQUEST_URI"], "?edit");
 		$delete = stristr($_SERVER["REQUEST_URI"], "?delete");
+		$rename = stristr($_SERVER["REQUEST_URI"], "?rename");
 		
-		if ($delete && file_exists($filename)) {
-			unlink($filename);
-			header("Location:" . TextLoft::$home);
-			exit();
-		}
+		if (TextLoft::$writeable === true):
+			if ($rename) {
+				$new_page = $_POST["rename-page-title"];			
+				file_put_contents(TextLoft::$path . "/" . $new_page . ".html", file_get_contents($filename));
+				unlink($filename);
+				header("Location:$new_page");
+				exit();
+
+			}
+		
+			if ($delete && file_exists($filename)) {
+				unlink($filename);
+				header("Location:" . TextLoft::$home);
+				exit();
+			}
+		endif;
 
 		$files = scandir(TextLoft::$path);		
 
@@ -39,7 +52,7 @@ class TextLoft {
 
 		TextLoft::$files = $files;		
 
-		if (!file_exists($filename) || $edit) {			
+		if (!file_exists($filename) || $edit && TextLoft::$writeable) {			
 			// File empty; show editor
 
 			if ($_POST) { 
@@ -48,7 +61,7 @@ class TextLoft {
 				header("Location:$page");
 			}else{
 				$current_content = $edit ? file_get_contents($filename) : "# ". ucwords($title) . "\n";
-				TextLoft::header("Editing $page");
+				TextLoft::header("$page", $edit);
 				TextLoft::editor($current_content);	
 				TextLoft::footer($edit);	
 			}			
@@ -57,7 +70,7 @@ class TextLoft {
 		}else{
 			require("markdown_extended.php");
 			$contents = file_get_contents($filename);
-			TextLoft::header($page);
+			TextLoft::header($page, $edit);
 			echo MarkDownExtended($contents);			
 			TextLoft::footer($edit);
 		}
@@ -75,13 +88,12 @@ class TextLoft {
 		<?php
 	}
 
-	function create ($filename, $content) {		
-		
-		$content = $content;
+	function create ($filename, $content) {				
+		$content = stripcslashes($content);
 		file_put_contents($filename, $content);
 	}
-
-	function header($title) {
+	
+	function header($title, $edit) {
 		?>
 		<!DOCTYPE HTML>
 		<html lang="en-US">
@@ -100,7 +112,24 @@ class TextLoft {
 			<div class="wrap">
 				<header>
 					<a class="home" href="<?= TextLoft::$home ?>"><?= TextLoft::$title ?></a>
-
+						&raquo; 
+					<?php if ($title != "index"): ?>
+						<form action="?rename" id="rename-page" method="post">
+						<?php if (TextLoft::$writeable): ?>
+							<?php if ($edit): ?>
+								<em>(editing)</em>
+							<?php endif;?>
+							
+						<input type="text" value="<?= $title ?>" name="rename-page-title" data-old="<?= $title ?>" id="rename-page-title" />
+						<?php else: ?>
+							<?= $title ?>
+						<?php endif;?>
+						
+						</form>
+					<?php else:?>
+						<?= $title ?>
+					<?php endif ?>
+					
 					<?php if(count(TextLoft::$files)):  ?>					
 					<select id="wiki-jump">
 						<option value="#" >&rarr; Jump</option>
@@ -119,9 +148,14 @@ class TextLoft {
 		</section>
 		<footer>
 			<div class="group">
-			<?php if (!$edit): ?> <a href="#" id="wiki-edit">Edit</a> | <a href="#" id="wiki-delete">Delete</a> 
+			<?php if (TextLoft::$writeable): ?>
+			<?php if (!$edit): ?>
+				<a href="#" id="wiki-edit">Edit</a> | <a href="#" id="wiki-delete">Delete</a> 
+			<?php endif ?>
 			</div>
-			<form class="wiki-new-page"><?php endif ?><input type="text" size=10 name="wiki-page" placeholder="Enter New Page"/> <input type="submit" value="Add"></form>
+			<form class="wiki-new-page">			
+			<input type="text" size=10 name="wiki-page" placeholder="Enter New Page"/> <input type="submit" value="Add"></form>
+			<?php endif;?>
 		</footer>
 		</div>
 		<script src="<?= TextLoft::$home ?>js/jquery.js"></script>		
