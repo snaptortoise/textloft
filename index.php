@@ -6,7 +6,7 @@ class TextLoft {
 	public static $path = "pages";
 	public static $files;
 	public static $home;
-	public static $writeable = false;
+	public static $writeable = true;
 
 	function go() {
 		
