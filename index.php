@@ -71,7 +71,7 @@ class TextLoft {
 		}elseif(file_exists($filename)){
 			require("markdown_extended.php");
 			$contents = file_get_contents($filename);
-			TextLoft::header($page);
+			TextLoft::header($page, $edit);
 			echo MarkDownExtended($contents);			
 			TextLoft::footer($edit);
 		}else{
@@ -97,7 +97,7 @@ class TextLoft {
 		file_put_contents($filename, $content);
 	}
 	
-	function header($title) {
+	function header($title, $edit) {
 		?>
 		<!DOCTYPE HTML>
 		<html lang="en-US">
