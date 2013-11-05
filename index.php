@@ -9,7 +9,7 @@ class TextLoft {
 	public static $writeable = true;
 	public static $extension = ".md";
 
-	function go() {
+	public static function go() {
 		
 		TextLoft::$home = substr($_SERVER["REQUEST_URI"], 0, strrpos($_SERVER["REQUEST_URI"], "/")+1);
 
@@ -86,7 +86,7 @@ class TextLoft {
 	}
 
 
-	function editor($current_content) {
+	public static function editor($current_content) {
 		?>
 		<form class="editor" action="" method="post">			
 			<textarea name="wiki-content" id="wiki-content" cols="30" rows="10"><?= $current_content ?></textarea> <br/>
@@ -96,12 +96,12 @@ class TextLoft {
 		<?php
 	}
 
-	function create ($filename, $content) {				
+	public static function create ($filename, $content) {				
 		$content = stripcslashes($content);
 		file_put_contents($filename, $content);
 	}
 	
-	function header($title, $edit) {
+	public static function header($title, $edit) {
 		?>
 		<!DOCTYPE HTML>
 		<html lang="en-US">
@@ -113,7 +113,7 @@ class TextLoft {
 			<meta name="apple-mobile-web-app-status-bar-style" content="black" />  
 			<meta name="viewport" content = "width = device-width, initial-scale = 1, user-scalable = no" /> 
 			<link rel="shortcut icon" href="<?= TextLoft::$home ?>favicon.png">
-			<link rel="apple-touch-icon-precomposed" href="<?= TextLoft::$home ?>apple-touch-icon-precomposed.png">
+			<link rel="apple-touch-icon-precomposed" href="<?= TextLoft::$home ?>apple-touch-icon.png">
 			<link rel="apple-touch-startup-image" href="apple-touch-startup-image.png">
 		</head>
 		<body>
@@ -142,7 +142,7 @@ class TextLoft {
 		<?php
 	}
 
-	function footer($edit) {
+	public static function footer($edit) {
 		?>
 		</section>
 		<footer>
